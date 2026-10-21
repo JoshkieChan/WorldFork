@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "worldfork"
+version = "0.1.0"
+description = "A reproducible counterfactual decision lab for synthetic supply networks"
+requires-python = ">=3.11"
+dependencies = ["numpy==2.3.5"]
+
+[tool.setuptools.packages.find]
+include = ["worldfork*"]

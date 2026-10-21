@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#131c19">
+  <meta name="description" content="Explore alternative decisions with a trained forecast, constrained policy search, and reproducible synthetic futures.">
+  <title>WorldFork — Counterfactual decision lab</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to workspace</a>
+  <div class="app-shell">
+    <aside class="rail" aria-label="Workspace navigation">
+      <a class="brand" href="/" aria-label="WorldFork home"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 6v12l10 8 10-8V6M16 26V12M6 6l10 6L26 6"/></svg></a>
+      <nav>
+        <button class="rail-link active" data-view="experiment" aria-label="Experiment" aria-current="page" title="Experiment"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8M10 3v6L4 19q-1 2 2 2h12q3 0 2-2L14 9V3M8 14h8"/></svg><span>Lab</span></button>
+        <button class="rail-link" data-view="evidence" aria-label="Evidence" title="Evidence"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5zM15 3v5h4M8 12h8M8 16h6"/></svg><span>Evidence</span></button>
+        <button class="rail-link" data-view="model" aria-label="Forecast model" title="Forecast model"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h17M7 15l4-5 4 2 5-7"/><circle cx="11" cy="10" r="1"/><circle cx="15" cy="12" r="1"/></svg><span>Model</span></button>
+        <button class="rail-link" data-view="archive" aria-label="Run archive" title="Run archive"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v4H3zM5 9v12h14V9M9 13h6"/></svg><span>Archive</span></button>
+      </nav>
+      <div class="rail-bottom"><span class="local-dot"></span><span>LOCAL</span></div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <a class="wordmark" href="/">worldfork<span class="wordmark-dot">.</span></a>
+        <div class="breadcrumb"><span class="breadcrumb-slash">/</span> Decision lab <span class="version">v0.1</span></div>
+        <div class="topbar-right"><span class="environment-label"><span class="status-dot"></span> Synthetic environment</span><button id="export-button" class="button button-quiet" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg><span>Export run</span></button></div>
+      </header>
+      <main id="main" tabindex="-1">
+        <div class="page-heading"><div><div class="eyebrow">COUNTERFACTUAL INTELLIGENCE</div><h1 id="page-title">A decision. Many possible futures.</h1><p id="page-subtitle">Change the conditions. Challenge a plan. Follow the evidence.</p></div><div class="heading-stamp"><span class="stamp-symbol">↗</span><span>EXPLORE<br>BEFORE YOU ACT</span></div></div>
+        <div id="notice" class="notice" role="status" hidden></div>
+        <section id="view-experiment" class="view active" aria-label="Experiment workspace">
+          <div class="lab-layout">
+            <aside class="scenario-panel">
+              <div class="panel-heading"><span class="section-number">01</span><h2>Set the conditions</h2><span class="tag">INPUT</span></div>
+              <p class="panel-description">A fictional region. Three supply hubs.<br>Six districts depending on them.</p>
+              <label class="field-label" for="preset-select">Starting scenario</label>
+              <select id="preset-select"><option>Loading scenarios…</option></select>
+              <p id="preset-description" class="field-note">Preparing the simulation environment.</p>
+              <div class="control-group"><div class="control-heading"><label for="demand">Demand pressure</label><output id="demand-value" for="demand">1.25×</output></div><input id="demand" type="range" min="0.6" max="2.5" step="any" value="1.25"><div class="range-labels"><span>0.6× normal</span><span>2.5× normal</span></div></div>
+              <div class="control-group"><div class="control-heading"><label for="disruption">West hub disruption</label><output id="disruption-value" for="disruption">45%</output></div><input id="disruption" type="range" min="0" max="0.85" step="any" value="0.45"><div class="range-labels"><span>Operational</span><span>85% capacity lost</span></div></div>
+              <div class="control-group"><div class="control-heading"><label for="reserve">Reserve capacity</label><output id="reserve-value" for="reserve">60 units/h</output></div><input id="reserve" type="range" min="0" max="200" step="any" value="60"><div class="range-labels"><span>0 units/h</span><span>200 units/h</span></div></div>
+              <label class="field-label" for="objective">Optimize for</label><select id="objective"><option value="balanced">Balanced resilience</option><option value="service">Delivery coverage</option><option value="efficiency">Cost efficiency</option><option value="equity">District equity</option></select>
+              <details class="advanced"><summary>Experiment settings <span>+</span></summary><div class="advanced-fields"><label class="field-label" for="run-name">Run name</label><input id="run-name" type="text" maxlength="80" value="West hub disruption"><div class="two-fields"><div><label class="field-label" for="worlds">Evaluation futures</label><select id="worlds"><option value="64">64</option><option value="128">128</option><option value="256" selected>256</option><option value="512">512</option></select></div><div><label class="field-label" for="seed">Random seed</label><input id="seed" type="number" min="1" max="2147483647" value="42"></div></div></div></details>
+              <button id="run-button" class="button button-primary" disabled><span class="run-icon">↗</span><span id="run-button-text">Preparing lab…</span><span class="button-arrow">→</span></button>
+              <p class="run-help" id="run-help">Reproducible. Local. No API key required.</p>
+              <div class="language-panel"><div class="language-title"><span>✦</span><h3>Describe a what-if</h3><span id="model-status" class="tag">OPTIONAL</span></div><label class="sr-only" for="scenario-prompt">Describe a scenario</label><textarea id="scenario-prompt" maxlength="2000" rows="3" placeholder="What if demand rises 40% and the west hub loses half its capacity?"></textarea><button id="interpret-button" class="button button-quiet" disabled>Translate to controls <span>↗</span></button><p id="language-help" class="field-note">Optional OpenAI interpretation. The forecast and simulation run locally.</p></div>
+            </aside>
+            <div class="results-column">
+              <div class="results-heading"><div><span class="section-number">02</span><h2>Explore the outcomes</h2></div><span id="run-status" class="run-status">INITIALIZING</span></div>
+              <div id="metrics" class="metrics-grid" aria-live="polite"></div>
+              <div class="world-layout">
+                <section class="network-panel panel"><div class="card-heading"><div><h3>The living network</h3><p id="network-subtitle">Synthetic supply model · 12-hour horizon</p></div><span class="tag dark-tag">SIMULATION</span></div><div id="network-wrap" class="network-wrap"><svg id="network" viewBox="0 0 1000 600" role="group" aria-label="Synthetic supply hubs and district delivery routes"></svg><div id="network-caption" class="network-caption">Preparing network…</div></div><div class="network-footer"><div class="legend"><span><i class="legend-hub"></i>Supply hub</span><span><i class="legend-district"></i>District</span><span><i class="legend-route"></i>Allocated flow</span></div><div id="node-detail" class="node-detail" aria-live="polite">Select a node to inspect</div></div></section>
+                <section class="recommendation-panel panel"><div class="card-heading"><div><span class="eyebrow">SEARCH RESULT</span><h3>A plan worth testing.</h3></div><span class="spark">↗</span></div><div id="recommendation" class="recommendation-body"><div class="empty-note">The planner is preparing its first experiment.</div></div><div class="recommendation-footer"><span class="status-dot"></span> Evidence, before confidence.</div></section>
+              </div>
+              <div class="analysis-layout">
+                <section class="panel chart-panel"><div class="card-heading"><div><h3>Coverage over time</h3><p>Share of each hour’s demand delivered</p></div><label class="sr-only" for="policy-select">Inspect policy</label><select id="policy-select" class="compact-select" disabled><option>Awaiting results</option></select></div><div id="timeline" class="timeline-chart"></div><div class="chart-legend"><span><i class="selected-line"></i>Selected policy</span><span><i class="baseline-line"></i>Baseline</span><span class="band-legend">Shaded: 10th–90th percentile</span></div></section>
+                <section class="panel sensitivity-panel"><div class="card-heading"><div><h3>Push the plan further</h3><p>Measured sensitivity of the recommendation</p></div><span class="small-symbol">±</span></div><div id="sensitivity" class="sensitivity-body"><p class="empty-note">Stress tests will appear after a run.</p></div></section>
+              </div>
+              <section class="panel comparison-panel"><div class="card-heading"><div><h3>Competing strategies</h3><p id="comparison-subtitle">All policies face the same held-out futures.</p></div><span class="tag">COMPARISON</span></div><div class="table-scroll"><table><thead><tr><th scope="col">Allocation policy</th><th scope="col">Coverage</th><th scope="col">P10 coverage</th><th scope="col">Dispatch cost</th><th scope="col">Equity gap</th><th scope="col">Score</th></tr></thead><tbody id="policy-table"></tbody></table></div></section>
+              <p class="research-note"><span>ⓘ</span> A research sandbox built on synthetic data. Outcomes describe this model, not the real world. <button class="text-link" data-view="model">Inspect the assumptions →</button></p>
+            </div>
+          </div>
+        </section>
+        <section id="view-evidence" class="view" aria-label="Experiment evidence" hidden><div id="evidence-content"></div></section>
+        <section id="view-model" class="view" aria-label="Forecast model and assumptions" hidden><div id="model-content"></div></section>
+        <section id="view-archive" class="view" aria-label="Saved experiments" hidden><div class="archive-toolbar"><p>Experiments saved on this computer, with their inputs and evidence.</p><button id="refresh-archive" class="button button-quiet">Refresh archive ↻</button></div><div id="archive-content"></div></section>
+        <footer class="workspace-footer"><span>WORLDFORK <span class="footer-divider">/</span> A lab for consequential what-ifs.</span><span>Learn → Search → Simulate → Verify</span></footer>
+      </main>
+    </div>
+  </div>
+  <div id="busy-overlay" class="busy-overlay" hidden role="status"><span class="spinner"></span><div><strong>Exploring alternative futures</strong><span id="busy-detail">Training forecast, searching policies, evaluating outcomes…</span></div><span id="busy-time">0s</span></div>
+</body>
+</html>
